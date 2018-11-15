@@ -15,8 +15,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan("waterfall")
 public class AppConfig implements WebMvcConfigurer{
 	
-	@Autowired
-	private StringToRoleConverter stringToRoleConverter;
 	
 	@Autowired
 	private StringToDateConverter stringToDateConverter;
@@ -29,11 +27,6 @@ public class AppConfig implements WebMvcConfigurer{
 		registry.viewResolver(viewResolver);
 	}
 	
-	@Override
-	public void addFormatters(FormatterRegistry registry) {
-		registry.addConverter(stringToRoleConverter);
-		registry.addConverter(stringToDateConverter);
-	}
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

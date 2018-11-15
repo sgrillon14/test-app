@@ -74,11 +74,11 @@
 	</dependency>
 		  
     <!-- MYSQL connector -->
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>${mysqlconnector.version}</version>
-    </dependency>
+<!--     <dependency> -->
+<!--       <groupId>mysql</groupId> -->
+<!--       <artifactId>mysql-connector-java</artifactId> -->
+<!--       <version>${mysqlconnector.version}</version> -->
+<!--     </dependency> -->
     
      <!-- SLF4J + Logback -->
      <dependency> 
@@ -225,6 +225,67 @@
 			          <source>1.8</source>
 			          <target>1.8</target>
 					</configuration>
+				</plugin>
+				
+				<plugin>
+				  <groupId>org.apache.maven.plugins</groupId>
+				  <artifactId>maven-surefire-plugin</artifactId>
+				  <version>2.12.1</version>
+				  <configuration>
+				    <excludes>
+				      <exclude>**/*IT*</exclude>
+				    </excludes>
+				  </configuration>
+				</plugin>
+				
+				<plugin>
+				  <groupId>org.apache.maven.plugins</groupId>
+				  <artifactId>maven-failsafe-plugin</artifactId>
+				  <version>2.12.4</version>
+				  <configuration>
+				    <includes>
+				      <include>**/*IT*</include>
+				    </includes>
+				  </configuration>
+				  <executions>
+				    <execution>
+				      <goals>
+				        <goal>integration-test</goal>
+				        <goal>verify</goal>
+				      </goals>
+				    </execution>
+				  </executions>
+				</plugin>
+				
+				<plugin>
+<!-- 				  <groupId>org.apache.tomcat.maven</groupId> -->
+<!-- 				  <artifactId>tomcat7-maven-plugin</artifactId> -->
+<!-- 				  <version>2.0</version> -->
+					<groupId>org.apache.tomcat.maven</groupId>
+				    <artifactId>tomcat8-maven-plugin</artifactId>
+				    <version>3.0-r1756463</version>
+				  <configuration>
+				    <path>/</path>
+				  </configuration>
+				  <executions>
+				    <execution>
+				      <id>start-tomcat</id>
+				      <phase>pre-integration-test</phase>
+				      <goals>
+				        <goal>run</goal>
+				      </goals>
+				      <configuration>
+				        <fork>true</fork>
+				      </configuration>
+				    </execution>
+				    <execution>
+				      <id>stop-tomcat</id>
+				      <phase>post-integration-test</phase>
+				      <goals>
+				        <goal>shutdown</goal>
+				      </goals>
+				    </execution>
+				  </executions>
 				</plugin>	
 
 			</plugins>
